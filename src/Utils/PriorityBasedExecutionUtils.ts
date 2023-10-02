@@ -1,6 +1,13 @@
 import * as Cosmos from "@azure/cosmos";
 import { LocalStorageUtility, StorageKey } from "Shared/StorageUtility";
 import { PriorityLevel } from "../Common/Constants";
+import { userContext } from "../UserContext";
+
+export function isFeatureEnabled(): boolean {
+   return userContext.apiType === "SQL" &&
+      (userContext.databaseAccount?.properties?.enablePriorityBasedExecution ||
+       userContext.features.enablePriorityBasedExecution);
+}
 
 export function isRelevantRequest(requestContext: Cosmos.RequestContext): boolean {
   return (
@@ -27,3 +34,4 @@ export const requestPlugin: Cosmos.Plugin<any> = async (requestContext, next) =>
   }
   return next(requestContext);
 };
+
