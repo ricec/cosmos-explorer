@@ -94,6 +94,12 @@ export function client(): Cosmos.CosmosClient {
   _defaultHeaders["x-ms-cosmos-sdk-supportedcapabilities"] =
     SDKSupportedCapabilities.None | SDKSupportedCapabilities.PartitionMerge;
 
+  // Default to low priority. Needed for connection-string-auth scenarios
+  // where we cannot use RP API, and thus, cannot detect whether priority
+  // based execution is enabled.
+  // The header will be ignored if priority based execution is disabled on the account.
+  _defaultHeaders["x-ms-cosmos-priority-level"] = PriorityLevel.Default;
+
   const options: Cosmos.CosmosClientOptions = {
     endpoint: endpoint() || "https://cosmos.azure.com", // CosmosClient gets upset if we pass a bad URL. This should never actually get called
     key: userContext.masterKey,
