@@ -4,9 +4,11 @@ import { PriorityLevel } from "../Common/Constants";
 import { userContext } from "../UserContext";
 
 export function isFeatureEnabled(): boolean {
-   return userContext.apiType === "SQL" &&
-      (userContext.databaseAccount?.properties?.enablePriorityBasedExecution ||
-       userContext.features.enablePriorityBasedExecution);
+  return (
+    userContext.apiType === "SQL" &&
+    (userContext.databaseAccount?.properties?.enablePriorityBasedExecution ||
+      userContext.features.enablePriorityBasedExecution)
+  );
 }
 
 export function isRelevantRequest(requestContext: Cosmos.RequestContext): boolean {
@@ -34,4 +36,3 @@ export const requestPlugin: Cosmos.Plugin<any> = async (requestContext, next) =>
   }
   return next(requestContext);
 };
-

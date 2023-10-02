@@ -115,7 +115,7 @@ export function client(): Cosmos.CosmosClient {
     (options as any).plugins = [{ on: "request", plugin: requestPlugin }];
   }
 
-   if (PriorityBasedExecutionUtils.isFeatureEnabled()) {
+  if (PriorityBasedExecutionUtils.isFeatureEnabled()) {
     const plugins = (options as any).plugins || [];
     plugins.push({ on: "request", plugin: PriorityBasedExecutionUtils.requestPlugin });
     (options as any).plugins = plugins;
